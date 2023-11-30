@@ -6,7 +6,7 @@
 //  Created by Max Desiatov on 07/04/2019.
 //
 
-class KeyedStorage<Key: Hashable & Comparable, Value> {
+struct KeyedStorage<Key: Hashable & Comparable, Value> {
     typealias Buffer = [(Key, Value)]
     typealias KeyMap = [Key: [Int]]
 
@@ -39,7 +39,7 @@ class KeyedStorage<Key: Hashable & Comparable, Value> {
         return keyMap[key]?.map { buffer[$0].1 } ?? []
     }
 
-    func append(_ value: Value, at key: Key) {
+    mutating func append(_ value: Value, at key: Key) {
         let i = buffer.count
         buffer.append((key, value))
         if keyMap[key] != nil {
@@ -73,25 +73,5 @@ extension KeyedStorage: CustomStringConvertible {
         let result = buffer.map { "\"\($0)\": \($1)" }.joined(separator: ", ")
 
         return "[\(result)]"
-    }
-}
-
-extension KeyedStorage where Key == String, Value == Box {
-    func merge(element: XMLCoderElement) -> KeyedStorage<String, Box> {
-        let result = self
-
-        let hasElements = !element.elements.isEmpty
-        let hasAttributes = !element.attributes.isEmpty
-        let hasText = element.stringValue != nil
-
-        if hasElements || hasAttributes {
-            result.append(element.transformToBoxTree(), at: element.key)
-        } else if hasText {
-            result.append(element.transformToBoxTree(), at: element.key)
-        } else {
-            result.append(SingleKeyedBox(key: element.key, element: NullBox()), at: element.key)
-        }
-
-        return result
     }
 }

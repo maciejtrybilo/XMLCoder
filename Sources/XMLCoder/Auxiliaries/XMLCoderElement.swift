@@ -116,7 +116,7 @@ struct XMLCoderElement: Equatable {
             (key: attribute.key, value: StringBox(attribute.value) as SimpleBox)
         })
         
-        let storage = KeyedStorage<String, Box>()
+        var storage = KeyedStorage<String, Box>()
         
         for element in self.elements {
 
@@ -135,27 +135,6 @@ struct XMLCoderElement: Equatable {
         
         return KeyedBox(elements: storage, attributes: attributes)
     }
-    
-//    private func transformToBoxTreeRecursive(storage: KeyedStorage<String, Box>, elements: [XMLCoderElement]) {
-//        
-//        if elements.isEmpty {
-//            return
-//        }
-//        
-//        for element in elements {
-//
-//            let hasElements = !element.elements.isEmpty
-//            let hasAttributes = !element.attributes.isEmpty
-//            let hasText = element.stringValue != nil
-//
-//            if hasElements || hasAttributes || hasText {
-//                transformToBoxTreeRecursive(storage: storage, elements: <#T##[XMLCoderElement]#>)
-//                storage.append(element.transformToBoxTree(), at: element.key)
-//            } else {
-//                storage.append(SingleKeyedBox(key: element.key, element: NullBox()), at: element.key)
-//            }
-//        }
-//    }
     
     func toXMLString(
         with header: XMLHeader?,
