@@ -55,8 +55,12 @@ class XMLStackParser: NSObject {
         xmlParser.delegate = self
         print("4")
 
-        guard !xmlParser.parse() || root == nil else {
-            print("5")
+        let parseResult = xmlParser.parse()
+        
+        guard !parseResult || root == nil else {
+            
+            print("5 \(parseResult), \(root == nil)")
+            
             return root!
         }
 
