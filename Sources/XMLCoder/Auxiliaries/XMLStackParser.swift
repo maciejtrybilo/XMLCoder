@@ -47,8 +47,11 @@ class XMLStackParser: NSObject {
         errorContextLength: UInt,
         shouldProcessNamespaces: Bool
     ) throws -> XMLCoderElement {
-        print("1")
-        let xmlParser = XMLParser(data: data)
+        print("1 streaming!")
+        
+        let inputStream = InputStream(data: data)
+        
+        let xmlParser = XMLParser(stream: inputStream)
         print("2")
         xmlParser.shouldProcessNamespaces = shouldProcessNamespaces
         print("3")
