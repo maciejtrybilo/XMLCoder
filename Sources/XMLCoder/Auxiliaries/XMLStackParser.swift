@@ -72,7 +72,7 @@ class XMLStackParser: NSObject {
             ))
         }
         
-        print("7")
+        print("7 error: \(error)")
         
         let lineNumber = xmlParser.lineNumber
         
