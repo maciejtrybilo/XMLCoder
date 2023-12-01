@@ -47,20 +47,29 @@ class XMLStackParser: NSObject {
         errorContextLength: UInt,
         shouldProcessNamespaces: Bool
     ) throws -> XMLCoderElement {
+        print("1")
         let xmlParser = XMLParser(data: data)
+        print("2")
         xmlParser.shouldProcessNamespaces = shouldProcessNamespaces
+        print("3")
         xmlParser.delegate = self
+        print("4")
 
         guard !xmlParser.parse() || root == nil else {
+            print("5")
             return root!
         }
 
+        print("6")
+        
         guard let error = xmlParser.parserError else {
             throw DecodingError.dataCorrupted(DecodingError.Context(
                 codingPath: [],
                 debugDescription: "The given data could not be parsed into XML."
             ))
         }
+        
+        print("7")
 
         // `lineNumber` isn't 0-indexed, so 0 is an invalid value for context
         guard errorContextLength > 0 && xmlParser.lineNumber > 0 else {
