@@ -70,9 +70,15 @@ class XMLStackParser: NSObject {
         }
         
         print("7")
+        
+        let lineNumber = xmlParser.lineNumber
+        
+        print(lineNumber)
+        
+        print("7.5")
 
         // `lineNumber` isn't 0-indexed, so 0 is an invalid value for context
-        guard errorContextLength > 0 && xmlParser.lineNumber > 0 else {
+        guard errorContextLength > 0 && lineNumber > 0 else {
             throw error
         }
         
