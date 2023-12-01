@@ -57,10 +57,9 @@ class XMLStackParser: NSObject {
 
         let parseResult = xmlParser.parse()
         
+        print("5 \(parseResult), \(root == nil)")
+        
         guard !parseResult || root == nil else {
-            
-            print("5 \(parseResult), \(root == nil)")
-            
             return root!
         }
 
@@ -77,7 +76,8 @@ class XMLStackParser: NSObject {
         
         let lineNumber = xmlParser.lineNumber
         
-        print(lineNumber)
+        print("lineNumber: \(lineNumber)")
+        print("errorContextLength: \(errorContextLength)")
         
         print("7.5")
 
