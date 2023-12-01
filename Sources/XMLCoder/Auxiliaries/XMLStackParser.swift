@@ -75,6 +75,8 @@ class XMLStackParser: NSObject {
         guard errorContextLength > 0 && xmlParser.lineNumber > 0 else {
             throw error
         }
+        
+        print("8")
 
         let string = String(data: data, encoding: .utf8) ?? ""
         let lines = string.split(separator: "\n")
@@ -85,6 +87,8 @@ class XMLStackParser: NSObject {
         }
         errorPosition += xmlParser.columnNumber
 
+        print("9")
+        
         var lowerBoundIndex = 0
         if errorPosition - offset > 0 {
             lowerBoundIndex = errorPosition - offset
@@ -97,9 +101,9 @@ class XMLStackParser: NSObject {
 
         let lowerBound = String.Index(utf16Offset: lowerBoundIndex, in: string)
         let upperBound = String.Index(utf16Offset: upperBoundIndex, in: string)
-
+        print("10")
         let context = string[lowerBound..<upperBound]
-
+        print("end of parse()")
         throw DecodingError.dataCorrupted(DecodingError.Context(
             codingPath: [],
             debugDescription: """
@@ -109,6 +113,7 @@ class XMLStackParser: NSObject {
             """,
             underlyingError: error
         ))
+        
     }
 
     func withCurrentElement(_ body: (inout XMLCoderElement) throws -> ()) rethrows {

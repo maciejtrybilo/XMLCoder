@@ -361,6 +361,9 @@ open class XMLDecoder {
         _ type: T.Type,
         from data: Data
     ) throws -> T {
+        
+        print("decode 1")
+        
         let topLevel: Box = try XMLStackParser.parse(
             with: data,
             errorContextLength: errorContextLength,
@@ -368,22 +371,29 @@ open class XMLDecoder {
             trimValueWhitespaces: trimValueWhitespaces,
             removeWhitespaceElements: removeWhitespaceElements
         )
+        
+        print("decode 2")
 
         let decoder = XMLDecoderImplementation(
             referencing: topLevel,
             options: options,
             nodeDecodings: []
         )
+        print("decode 3")
         decoder.nodeDecodings = [
             options.nodeDecodingStrategy.nodeDecodings(
                 forType: T.self,
                 with: decoder
             ),
         ]
+        
+        print("decode 4")
 
         defer {
             _ = decoder.nodeDecodings.removeLast()
         }
+        
+        print("decode 5")
 
         return try decoder.unbox(topLevel)
     }
